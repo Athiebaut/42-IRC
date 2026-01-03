@@ -1,15 +1,5 @@
 #include "../incs/classes/Bot.hpp"
 
-/**
- * @brief Splits the input buffer string into two parts: the first word and the rest of the string.
- *
- * This function takes an input buffer string and splits it into two parts. The first word
- * (token) is returned, and the rest of the string is stored in the provided date reference.
- *
- * @param buff The input buffer string to be split.
- * @param date A reference to a string where the rest of the buffer will be stored.
- * @return The first word (token) from the input buffer string.
- */
 std::string Bot::SplitBuff(std::string buff, std::string &date)
 {
 	std::istringstream stm(buff);
@@ -19,16 +9,6 @@ std::string Bot::SplitBuff(std::string buff, std::string &date)
 	return token;
 }
 
-/**
- * @brief Parses and validates a given age string in the format "YYYY-MM-DD".
- *
- * This function checks if the input string is a valid date in the format "YYYY-MM-DD".
- * It ensures that the year is between 1900 and 2024, the month is between 1 and 12,
- * and the day is valid for the given month, including leap year considerations.
- *
- * @param age The age string to be parsed and validated.
- * @return Returns 1 if the age string is valid, otherwise returns 0.
- */
 int Bot::ParsAge(std::string age)
 {
 	std::string year, month, day, age1;
@@ -79,17 +59,6 @@ int Bot::ParsAge(std::string age)
 	return 1;
 }
 
-/**
- * @brief Calculates the age of a user based on their birth date and sends a message with the result.
- * 
- * @param age The birth date of the user in the format "year-month-day".
- * @param Nickname The nickname of the user to whom the message will be sent.
- * @param ircsock The IRC socket used to send the message.
- * 
- * This function parses the provided birth date, calculates the age in years, months, and days,
- * and sends a private message to the user with the calculated age. If the date format is invalid,
- * it sends an error message to the user.
- */
 void Bot::ageCalculator(std::string age, std::string Nickname,int ircsock)
 {
 	if (!ParsAge(age))

@@ -23,18 +23,6 @@ void	Bot::setNick(std::string nick)
 
 //---------------------------------------------------INIT METHODS---------------------------------------------------//
 
-/**
- * @brief Initializes the Bot and handles its connection to the IRC server.
- *
- * This function sets up the bot's connection to the IRC server, processes incoming messages,
- * and handles specific commands such as "!age" and "!joke". It also manages the bot's login
- * state and responds to PING messages from the server to keep the connection alive.
- *
- * @param sock The socket file descriptor for the connection (SERVER).
- * @param nick The nickname of the bot.
- * @param user The username of the bot.
- * @param adr The address of the bot.
- */
 void Bot::init(int sock, std::string nick, std::string user, std::string adr)
 {
 	std::string welcome;

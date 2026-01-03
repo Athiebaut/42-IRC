@@ -2,22 +2,6 @@
 
 int ircsock;
 
-/**
- * @brief Parses the .env file and extracts environment variables.
- * 
- * This function reads the .env file located in the "bonus" directory, parses its content,
- * and extracts key-value pairs of environment variables. It expects exactly 5 environment
- * variables with specific keys: ADDRESS, PORT, PASSWORD, NICKNAME, and FILE.
- * 
- * @param values A reference to a vector of strings where the extracted values will be stored.
- *               The vector should be empty when passed to the function.
- * 
- * @return int Returns 0 on success, 1 on failure. Possible failure reasons include:
- *             - Unable to open the .env file.
- *             - Incorrect number of environment variables.
- *             - Invalid environment variable keys.
- *             - Leading or trailing whitespace in environment variable values (except for PASSWORD).
- */
 int parse(std::vector<std::string> &values)
 {
 	std::vector<std::pair<std::string, std::string> > envs;
@@ -71,30 +55,12 @@ int parse(std::vector<std::string> &values)
 	return 0;
 }
 
-/**
- * @brief Checks if the given port string is a valid port number.
- *
- * This function verifies that the provided port string consists only of digits
- * and that it represents a valid port number within the range of 1024 to 65535.
- *
- * @param port The port string to validate.
- * @return true if the port string is valid, false otherwise.
- */
 bool isPortValid(std::string port)
 {
 	return (port.find_first_not_of("0123456789") == std::string::npos && \
 		std::atoi(port.c_str()) >= 1024 && std::atoi(port.c_str()) <= 65535);
 }
 
-/**
- * @brief Signal handler function that gets called when a signal is received.
- *
- * This function is intended to handle signals sent to the process. When a signal
- * is received, it prints a message to the standard output and sends a "QUIT" message
- * to the IRC socket.
- *
- * @param signum The signal number that was received.
- */
 void SignalHandler(int signum)
 {
 	(void)signum;
@@ -102,33 +68,6 @@ void SignalHandler(int signum)
 	Bot::sendMessage("QUIT\r\n", ircsock);
 }
 
-/**
- * @brief Entry point of the bot application.
- * 
- * This function initializes the bot, parses command-line arguments, validates them,
- * sets up signal handlers, and connects to an IRC server using the provided arguments.
- * 
- * @return int Returns 0 on successful execution, 1 on failure.
- * 
- * The function performs the following steps:
- * 1. Initializes the Bot object.
- * 2. Clears the console screen.
- * 3. Parses command-line arguments and validates them.
- * 4. Sets up signal handlers for SIGINT and SIGQUIT.
- * 5. Resolves the address if it is "localhost" or "LOCALHOST".
- * 6. Retrieves quotes from a file specified in the arguments.
- * 7. Creates a socket and connects to the IRC server.
- * 8. Sends authentication messages (PASS, NICK, USER) to the IRC server.
- * 9. Initializes the bot with the connection details.
- * 10. Closes the socket and exits.
- * 
- * The function expects the following arguments in the .env file:
- * - av[0]: IRC server address
- * - av[1]: Port number
- * - av[2]: Password
- * - av[3]: Bot nickname
- * - av[4]: Filename for quotes
- */
 int main()
 {
 	Bot bot;

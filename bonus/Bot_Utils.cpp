@@ -1,14 +1,5 @@
 #include "../incs/classes/Bot.hpp"
 
-/**
- * @brief Counts the occurrences of specific commands in a given string.
- *
- * This function searches for the commands "!joke" and "!age" within the provided string
- * and returns the total count of these commands.
- *
- * @param str The input string in which to search for the commands.
- * @return The total number of occurrences of the commands "!joke" and "!age" in the input string.
- */
 size_t Bot::countCommand(std::string str)
 {
 	size_t size = 0;
@@ -20,23 +11,6 @@ size_t Bot::countCommand(std::string str)
 	return size;
 }
 
-/**
- * @brief Extracts the nick and command from a received IRC message based on the mode.
- * 
- * @param recived The received IRC message as a string.
- * @param nick Reference to a string where the extracted nick will be stored.
- * @param command Reference to a string where the extracted command will be stored.
- * @param mode The mode of extraction:
- *             - 1: Extracts nick and command from a message without a channel (PRIVMSG).
- *             - 0: Extracts nick and command from an invitation message (NOTICE).
- * 
- * The function processes the received message based on the mode:
- * - In mode 1, it extracts the nick and command from a message that does not contain a channel.
- *   It handles commands like "!joke" and "!age".
- * - In mode 0, it extracts the nick and command from an invitation message.
- * 
- * The extracted nick and command are stored in the provided references.
- */
 void Bot::getCommand(std::string recived, std::string &nick , std::string &command, int mode)
 {
 	if (mode == 1)
@@ -123,16 +97,6 @@ void Bot::getCommand(std::string recived, std::string &nick , std::string &comma
 	}
 }
 
-/**
- * @brief Sends a formatted IRC message to a specified file descriptor.
- * 
- * This function takes a message string, formats it using the MessageHandler::ircFormat
- * method, and sends it to the given file descriptor using the send() system call.
- * If the send operation fails, an error message is printed to the standard error stream.
- * 
- * @param message The message to be sent.
- * @param fd The file descriptor to which the message will be sent.
- */
 void Bot::sendMessage(std::string message, int fd)
 {
 	std::string formatedMessage = MessageHandler::ircFormat(message);
@@ -140,15 +104,6 @@ void Bot::sendMessage(std::string message, int fd)
 		std::cerr << "Send failed." << std::endl;
 }
 
-/**
- * @brief Sends a private message to a specified user.
- * 
- * This function constructs an IRC private message (PRIVMSG) command and sends it to the specified user.
- * 
- * @param message The message to be sent to the user.
- * @param UserNick The nickname of the user to whom the message will be sent.
- * @param sock The socket file descriptor used to send the message.
- */
 void Bot::send_privmsg(std::string message, std::string UserNick, int sock)
 {
 	std::string msg = "PRIVMSG " + UserNick + " :" + message + "\r\n";
